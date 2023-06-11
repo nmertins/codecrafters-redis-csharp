@@ -7,4 +7,11 @@ Console.WriteLine("Logs from your program will appear here!");
 // Uncomment this block to pass the first stage
 TcpListener server = new TcpListener(IPAddress.Any, 6379);
 server.Start();
-server.AcceptSocket(); // wait for client
+
+TcpClient client = server.AcceptTcpClient();
+NetworkStream stream = client.GetStream();
+
+string response = "+PONG\r\n";
+Byte[] data = System.Text.Encoding.ASCII.GetBytes(response);
+
+stream.Write(data, 0, data.Length);
